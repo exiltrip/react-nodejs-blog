@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './profile.module.sass'
 import ProfileLogo from '../../images/gitlogo.jpg'
 import Post from './Post'
@@ -6,46 +6,50 @@ import axios from 'axios';
 
 const Profile = () => {
 
-    const [content, setContent] = useState(0);
+    const [content, setContent] = useState('');
+    const [person, setPerson] = useState([]);
 
     const handleChange = event => {
-        setContent({ "content": event.target.value });
+        setContent(event.target.value);
     }
 
-    const handleSubmit = event => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-
-        axios.post(`http://localhost:8080/api/post`, { "userID": 2, content })
+        axios.post(`http://localhost:8080/api/post`, { userID: 2, content })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
+                setContent('');
+
+                axios.get(`http://localhost:8080/api/post?id=2`)
+                    .then(res => {
+                        setPerson(res.data);
+                    })
             })
     }
 
-    useEffect(() => { axios.get(`http://localhost:8080/api/post?id=2`)
-        .then(res => {
-            const persons = res.data;
-            this.setState({ persons });
-            ;
-        })});
+    useEffect(() => {
+        axios.get(`http://localhost:8080/api/post?id=2`)
+            .then(res => {
+                setPerson(res.data);
+            })
+    }, []);
 
 
     return (
         <main className={s.main}>
             <div className={s.ProfileHeader}>
-                <div className={s.ProfileLogo}><img className={s.ProfileLogo_img} src={ProfileLogo} alt="Profile Logo"/></div>
+                <div className={s.ProfileLogo}><img className={s.ProfileLogo_img} src={ProfileLogo} alt="Profile Logo" /></div>
                 <h1 className={s.h1}>EXILTRIP</h1>
             </div>
 
             <div className={s.Profile}>
                 <h2 className={s.h2}>My posts</h2>
-
-                    <form className={s.InputBar} onSubmit={handleSubmit}>
-                    <input className={s.input} type="text" name="content" placeholder="New post" onChange={handleChange} />
-                    <button className={s.SubmitPost} type="submit" >Submit</button>
-                    </form>
-
-                    { this.state.persons.map(person => <Post message={person.content} />)}
+                <div className={s.InputBar}>
+                    <input className={s.input} type="text" name="content" placeholder="New post" value={content} onChange={handleChange} />
+                    <button className={s.SubmitPost} type="submit" onClick={handleSubmit}>Submit</button>
+                </div>
+                {person.map(message => <Post message={message.content} />)}
             </div>
         </main>
     )
