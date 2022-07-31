@@ -6,9 +6,14 @@ import axios from 'axios';
 
 const Profile = () => {
 
+
+
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
     const [person, setPerson] = useState([]);
+
+    const url = new URL(document.location.href);
+    const urlID = (url.searchParams.get('id'));
 
     const handleChange = event => {
         setContent(event.target.value);
@@ -27,21 +32,19 @@ const Profile = () => {
                 setContent('');
                 setTitle('');
 
-                axios.get(`http://localhost:8080/api/post?id=2`)
+                axios.get(`http://localhost:8080/api/post?id=${urlID}`)
                     .then(res => {
                         setPerson(res.data);
                     })
             })
     }
 
-
-
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/post?id=2`)
+        axios.get(`http://localhost:8080/api/post?id=${urlID}`)
             .then(res => {
                 setPerson(res.data);
             })
-    }, []);
+    }, [urlID]);
 
 
 

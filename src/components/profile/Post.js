@@ -33,7 +33,6 @@ const Post = (props) => {
 
             <span className={s.span}>{props.symbol}</span>
             <span className={s.span}>{props.status}</span>
-            <q className={s.q}>{props.id}</q>
 
         </section>
     );

@@ -5,14 +5,17 @@ import Profile from "./components/profile/profile.js";
 import Messages from "./components/messages/messages.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+
+
 const App = () => {
     return (
 
         <BrowserRouter>
             <Header />
             <Routes>
-                <Route path="/profile/*" element={<Profile />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/messages/*" element={<Messages />} />
+                <Route path="/authorization" element={<authorization />} />
             </Routes>
             <Footer />
         </BrowserRouter>
