@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './authorisation.module.sass'
 const Authorization = () => {
 
@@ -19,6 +19,17 @@ const Authorization = () => {
     const [nameDirty, setNameDirty] = useState(false);
     const [surnameDirty, setSurnameDirty] = useState(false);
     const [loginDirty, setLoginDirty] = useState(false);
+
+    const [formValid, setFormValid] = useState(false)
+    useEffect(() => {
+        if (emailError || passwordError || nameError || surnameError || loginError){
+            setFormValid(false)
+        }
+        else{
+            setFormValid(true)
+        }
+
+    },[emailError, passwordError, nameError, surnameError, loginError])
 
     const blurHandler = (e) =>  {
         switch (e.target.name){
@@ -47,7 +58,11 @@ const Authorization = () => {
             /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if (!re.test(String(e.target.value).toLowerCase())) {
             setEmailError('некорректный e-mail')
-        }else{
+            if(!e.target.value){
+                setEmailError('e-mail не может быть пустым!')
+            }
+        }
+        else{
             setEmailError("")
         }
     }
@@ -55,6 +70,9 @@ const Authorization = () => {
         setPassword(e.target.value)
         if (e.target.value.length < 4) {
             setPasswordError('слишком короткий пароль!')
+            if(!e.target.value){
+                setPasswordError('пароль не может быть пустым!')
+            }
         }else{
             setPasswordError("")
         }
@@ -63,6 +81,9 @@ const Authorization = () => {
         setName(e.target.value)
         if (e.target.value.length < 2) {
             setNameError('слишком короткое имя!')
+            if(!e.target.value){
+                setNameError('имя не может быть пустым!')
+            }
         }else{
             setNameError("")
         }
@@ -71,6 +92,9 @@ const Authorization = () => {
         setSurname(e.target.value)
         if (e.target.value.length < 2) {
             setSurnameError('слишком короткая фамилия!')
+            if(!e.target.value){
+                setSurnameError('фамилия не может быть пустой!')
+            }
         }else{
             setSurnameError("")
         }
@@ -79,6 +103,9 @@ const Authorization = () => {
         setLogin(e.target.value)
         if (e.target.value.length < 4) {
             setLoginError('слишком короткий логин!')
+            if(!e.target.value){
+                setLoginError('логин не может быть пустым!')
+            }
         }else{
             setLoginError("")
         }
@@ -104,9 +131,9 @@ const Authorization = () => {
                 {(loginDirty && loginError) && <div className={s.error} style={{color: "red"}}>{loginError}</div>}
                 <input onChange={e => loginHandler(e)} value={login} onBlur={e => blurHandler(e)} type="text" name="login" placeholder="Enter your login"/>
 
-                <button type="submit">Sign In</button>
+                <button disabled={!formValid} type="submit">Sign In</button>
 
-                <a href="">уже зарегестрированны?</a>
+                <a href="/">уже зарегестрированны?</a>
             </form>
         </main>
     );
