@@ -38,7 +38,4 @@ create TABLE post(
 );
 
 
-create TABLE images(
-    image VARCHAR(255)
-);
 
