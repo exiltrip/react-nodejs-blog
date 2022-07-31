@@ -12,3 +12,9 @@ create TABLE post(
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES person (id)
 );
+
+
+create TABLE images(
+    image VARCHAR(255)
+);
+

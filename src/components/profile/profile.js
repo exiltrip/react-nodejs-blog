@@ -7,19 +7,25 @@ import axios from 'axios';
 const Profile = () => {
 
     const [content, setContent] = useState('');
+    const [title, setTitle] = useState('');
     const [person, setPerson] = useState([]);
 
     const handleChange = event => {
         setContent(event.target.value);
     }
+    const handleChangeTitle = event => {
+        setTitle(event.target.value);
+    }
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://localhost:8080/api/post`, { userID: 2, content })
+        axios.post(`http://localhost:8080/api/post`, { userID: 2, content, title })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
                 setContent('');
+                setTitle('');
 
                 axios.get(`http://localhost:8080/api/post?id=2`)
                     .then(res => {
@@ -28,12 +34,15 @@ const Profile = () => {
             })
     }
 
+
+
     useEffect(() => {
         axios.get(`http://localhost:8080/api/post?id=2`)
             .then(res => {
                 setPerson(res.data);
             })
     }, []);
+
 
 
     return (
@@ -46,10 +55,11 @@ const Profile = () => {
             <div className={s.Profile}>
                 <h2 className={s.h2}>My posts</h2>
                 <div className={s.InputBar}>
+                    <input className={s.title} type="text" name="title" placeholder="title" value={title} onChange={handleChangeTitle} />
                     <input className={s.input} type="text" name="content" placeholder="New post" value={content} onChange={handleChange} />
                     <button className={s.SubmitPost} type="submit" onClick={handleSubmit}>Submit</button>
                 </div>
-                {person.map(message => <Post message={message.content} />)}
+                {person.map(message => <Post title={message.title} message={message.content} id={message.id }  />)}
             </div>
         </main>
     )
