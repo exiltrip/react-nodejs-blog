@@ -21,6 +21,7 @@ const Authorization = () => {
     const [loginDirty, setLoginDirty] = useState(false);
 
     const [formValid, setFormValid] = useState(false)
+
     useEffect(() => {
         if (emailError || passwordError || nameError || surnameError || loginError){
             setFormValid(false)
