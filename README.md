@@ -6,7 +6,7 @@ In the project directory, you can run:
 
 ### `npm start`
 
-start this whole boolshit
+start this whole bullshit
 
 ### `npm test`
 
