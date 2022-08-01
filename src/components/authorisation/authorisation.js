@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import s from './authorisation.module.sass'
+import axios from "axios";
 const Authorization = () => {
 
     const [email, setEmail] = useState();
@@ -112,27 +113,59 @@ const Authorization = () => {
         }
     }
 
+    const handleChangeName = event => {
+        setName(event.target.value);
+    }
+    const handleChangeSurname = event => {
+        setSurname(event.target.value);
+    }
+    const handleChangeLogin = event => {
+        setLogin(event.target.value);
+    }
+    const handleChangeEmail = event => {
+        setEmail(event.target.value);
+    }
+    const handleChangePassword = event => {
+        setPassword(event.target.value);
+    }
+
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        axios.post(`http://localhost:8080/api/user`, { name, surname, password, email, login })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+                setName('');
+                setSurname('');
+                setPassword('');
+                setEmail('');
+                setLogin('');
+            })
+    }
+
+
     return (
-        <main>
+        <main className={s.main_auth}>
             <form>
                 <h1>Sign In</h1>
 
                 {(emailDirty && emailError) && <div className={s.error} style={{color: "red"}}>{emailError}</div>}
-                <input onChange={e => emailHandler(e)} value={email} onBlur={e => blurHandler(e)} type="text" name="email" placeholder="Enter your e-mail"/>
+                <input onChange={e => emailHandler(e) && handleChangeEmail} value={email} onBlur={e => blurHandler(e)} type="text" name="email" placeholder="Enter your e-mail"/>
 
                 {(passwordDirty && passwordError) && <div className={s.error} style={{color: "red"}}>{passwordError}</div>}
-                <input onChange={e => passwordHandler(e)} value={password} onBlur={e => blurHandler(e)} type="password" name="password" placeholder="Enter your password"/>
+                <input onChange={e => passwordHandler(e) && handleChangePassword} value={password} onBlur={e => blurHandler(e)} type="password" name="password" placeholder="Enter your password"/>
 
                 {(nameDirty && nameError) && <div className={s.error} style={{color: "red"}}>{nameError}</div>}
-                <input onChange={e => nameHandler(e)} value={name} onBlur={e => blurHandler(e)} type="text" name="name" placeholder="Enter your name"/>
+                <input onChange={e => nameHandler(e) && handleChangeName} value={name} onBlur={e => blurHandler(e)} type="text" name="name" placeholder="Enter your name"/>
 
                 {(surnameDirty && surnameError) && <div className={s.error} style={{color: "red"}}>{surnameError}</div>}
-                <input onChange={e => surnameHandler(e)} value={surname} onBlur={e => blurHandler(e)} type="text" name="surname" placeholder="Enter your surname"/>
+                <input onChange={e => surnameHandler(e) && handleChangeSurname} value={surname} onBlur={e => blurHandler(e)} type="text" name="surname" placeholder="Enter your surname"/>
 
                 {(loginDirty && loginError) && <div className={s.error} style={{color: "red"}}>{loginError}</div>}
-                <input onChange={e => loginHandler(e)} value={login} onBlur={e => blurHandler(e)} type="text" name="login" placeholder="Enter your login"/>
+                <input onChange={e => loginHandler(e) && handleChangeLogin} value={login} onBlur={e => blurHandler(e)} type="text" name="login" placeholder="Enter your login"/>
 
-                <button disabled={!formValid} type="submit">Sign In</button>
+                <button disabled={!formValid} type="submit" onClick={handleSubmit}>Sign In</button>
 
                 <a href="/">уже зарегестрированны?</a>
             </form>

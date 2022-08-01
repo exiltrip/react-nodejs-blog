@@ -4,7 +4,8 @@ create TABLE person(
     name VARCHAR(255),
     surname VARCHAR(255),
     password VARCHAR(255),
-    login VARCHAR(255)
+    login VARCHAR(255),
+    email VARCHAR(255)
 );
 
 create TABLE post(
