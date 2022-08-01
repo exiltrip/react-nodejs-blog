@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import s from './authorisation.module.sass'
 import axios from "axios";
+import {useNavigate} from "react-router";
+
+
 const Authorization = () => {
 
     const [email, setEmail] = useState();
@@ -21,16 +24,15 @@ const Authorization = () => {
     const [surnameDirty, setSurnameDirty] = useState(false);
     const [loginDirty, setLoginDirty] = useState(false);
 
-    const [formValid, setFormValid] = useState(false)
+    const [formValid, setFormValid] = useState(false);
+
 
     useEffect(() => {
-        if (emailError || passwordError || nameError || surnameError || loginError){
+        if (emailError || passwordError || nameError || surnameError || loginError) {
             setFormValid(false)
-        }
-        else{
+        } else {
             setFormValid(true)
         }
-
     },[emailError, passwordError, nameError, surnameError, loginError])
 
     const blurHandler = (e) =>  {
@@ -52,7 +54,7 @@ const Authorization = () => {
                 break
         }
 
-    }
+    };
 
     const emailHandler = (e) => {
         setEmail(e.target.value)
@@ -78,7 +80,7 @@ const Authorization = () => {
         }else{
             setPasswordError("")
         }
-    }
+    };
     const nameHandler = (e) => {
         setName(e.target.value)
         if (e.target.value.length < 2) {
@@ -89,7 +91,7 @@ const Authorization = () => {
         }else{
             setNameError("")
         }
-    }
+    };
     const surnameHandler = (e) => {
         setSurname(e.target.value)
         if (e.target.value.length < 2) {
@@ -100,7 +102,7 @@ const Authorization = () => {
         }else{
             setSurnameError("")
         }
-    }
+    };
     const loginHandler = (e) => {
         setLogin(e.target.value)
         if (e.target.value.length < 4) {
@@ -111,28 +113,29 @@ const Authorization = () => {
         }else{
             setLoginError("")
         }
-    }
+    };
 
     const handleChangeName = event => {
         setName(event.target.value);
-    }
+    };
     const handleChangeSurname = event => {
         setSurname(event.target.value);
-    }
+    };
     const handleChangeLogin = event => {
         setLogin(event.target.value);
-    }
+    };
     const handleChangeEmail = event => {
         setEmail(event.target.value);
-    }
+    };
     const handleChangePassword = event => {
         setPassword(event.target.value);
-    }
+    };
 
+    let navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://localhost:8080/api/user`, { name, surname, password, email, login })
+        axios.post(`http://localhost:8080/api/user`, {name, surname, password, email, login})
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -141,8 +144,15 @@ const Authorization = () => {
                 setPassword('');
                 setEmail('');
                 setLogin('');
+
+                localStorage.setItem('userLogin', login);
+                localStorage.setItem('userPassword', password);
+                localStorage.setItem('userName', name);
+                localStorage.setItem('userSurname', surname);
+
+                navigate(`../profile?id=${login}`, { replace: true });
             })
-    }
+    };
 
 
     return (
@@ -167,7 +177,7 @@ const Authorization = () => {
 
                 <button disabled={!formValid} type="submit" onClick={handleSubmit}>Sign In</button>
 
-                <a href="/">уже зарегестрированны?</a>
+                <a href="/">пошел нахуй?</a>
             </form>
         </main>
     );

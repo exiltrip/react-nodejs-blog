@@ -8,12 +8,18 @@ create TABLE person(
     email VARCHAR(255)
 );
 
+create TABLE message(
+    id SERIAL PRIMARY KEY,
+    content VARCHAR(2000),
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES person (id)
+);
+
 create TABLE post(
     id SERIAL PRIMARY KEY,
     title VARCHAR(255),
-    content VARCHAR(255),
-    user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES person (id)
+    content VARCHAR(2000),
+    user_id varchar(255)
 );
 
 

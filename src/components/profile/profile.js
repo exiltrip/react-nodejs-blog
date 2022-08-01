@@ -5,15 +5,19 @@ import Post from './Post'
 import axios from 'axios';
 
 const Profile = () => {
+    const url = new URL(document.location.href);
+    const urlID = (url.searchParams.get('id'));
 
-
+    const userName = localStorage.getItem('userName');
+    const userSurname = localStorage.getItem('userSurname');
+    const userLogin = localStorage.getItem('userLogin');
 
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
     const [person, setPerson] = useState([]);
+    const [userId, setUserId] = useState(urlID);
 
-    const url = new URL(document.location.href);
-    const urlID = (url.searchParams.get('id'));
+
 
     const handleChange = event => {
         setContent(event.target.value);
@@ -25,12 +29,13 @@ const Profile = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://localhost:8080/api/post`, { userID: 2, content, title })
+        axios.post(`http://localhost:8080/api/post`, { userId, content, title })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
                 setContent('');
                 setTitle('');
+                setUserId('');
 
                 axios.get(`http://localhost:8080/api/post?id=${urlID}`)
                     .then(res => {
@@ -48,11 +53,12 @@ const Profile = () => {
 
 
 
+
     return (
         <main className={s.main}>
             <div className={s.ProfileHeader}>
                 <div className={s.ProfileLogo}><img className={s.ProfileLogo_img} src={ProfileLogo} alt="Profile Logo" /></div>
-                <h1 className={s.h1}>EXILTRIP</h1>
+                <h1 className={s.h1}>{userLogin}</h1>
             </div>
 
             <div className={s.Profile}>
@@ -62,7 +68,7 @@ const Profile = () => {
                     <input className={s.input} type="text" name="content" placeholder="New post" value={content} onChange={handleChange} />
                     <button className={s.SubmitPost} type="submit" onClick={handleSubmit}>Submit</button>
                 </div>
-                {person.map(message => <Post title={message.title} message={message.content} id={message.id }  />)}
+                {person.map(message => <Post userName={userName} title={message.title} message={message.content} id={message.id }  />)}
             </div>
         </main>
     )
