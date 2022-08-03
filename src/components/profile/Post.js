@@ -29,7 +29,7 @@ const Post = (props) => {
             <div className={s.user}>
                 <div className={s.user1231}>
                 <div className={s.ProfileLogo}></div>
-                <h2 className={s.h2}>{props.userName}</h2>
+                <h2 className={s.h2}>{props.userLogin}</h2>
                 </div>
                 <button className={s.delete} type="submit" onClick={handleDelete}>delete</button>
             </div>

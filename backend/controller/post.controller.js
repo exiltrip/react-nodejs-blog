@@ -9,8 +9,8 @@ class postController {
         res.json(newPost.rows[0])
     }
     async getPostsByUser(req, res) {
-        const login = req.query.login
-        const posts = await db.query(`SELECT * FROM post where user_id = $1`, [login])
+        const id = req.query.id
+        const posts = await db.query(`SELECT * FROM post where user_id = $1`, [id])
 
         res.status(200).json(posts.rows)
     }

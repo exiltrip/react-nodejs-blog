@@ -17,8 +17,6 @@ const Profile = () => {
     const [person, setPerson] = useState([]);
     const [userId, setUserId] = useState(urlID);
 
-
-
     const handleChange = event => {
         setContent(event.target.value);
     }
@@ -68,7 +66,7 @@ const Profile = () => {
                     <input className={s.input} type="text" name="content" placeholder="New post" value={content} onChange={handleChange} />
                     <button className={s.SubmitPost} type="submit" onClick={handleSubmit}>Submit</button>
                 </div>
-                {person.map(message => <Post userName={userName} title={message.title} message={message.content} id={message.id }  />)}
+                {person.map(message => <Post userLogin={userLogin} title={message.title} message={message.content} id={message.id }  />)}
             </div>
         </main>
     )

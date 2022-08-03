@@ -6,6 +6,8 @@ import {useNavigate} from "react-router";
 
 const Authorization = () => {
 
+    localStorage.clear();
+
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [name, setName] = useState();
@@ -26,7 +28,7 @@ const Authorization = () => {
 
     const [formValid, setFormValid] = useState(false);
 
-
+    const [authorized, setAuthorized] = useState('false');
     useEffect(() => {
         if (emailError || passwordError || nameError || surnameError || loginError) {
             setFormValid(false)
@@ -144,16 +146,18 @@ const Authorization = () => {
                 setPassword('');
                 setEmail('');
                 setLogin('');
+                setAuthorized('true');
+
+
+                navigate(`../profile?id=${login}`, { replace: true });
 
                 localStorage.setItem('userLogin', login);
                 localStorage.setItem('userPassword', password);
                 localStorage.setItem('userName', name);
                 localStorage.setItem('userSurname', surname);
-
-                navigate(`../profile?id=${login}`, { replace: true });
+                localStorage.setItem('authorized', authorized);
             })
     };
-
 
     return (
         <main className={s.main_auth}>
@@ -177,7 +181,7 @@ const Authorization = () => {
 
                 <button disabled={!formValid} type="submit" onClick={handleSubmit}>Sign In</button>
 
-                <a href="/">пошел нахуй?</a>
+                <a href="/">already Signed? Login</a>
             </form>
         </main>
     );
