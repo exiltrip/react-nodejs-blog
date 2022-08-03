@@ -4,7 +4,7 @@ import axios from "axios";
 import {useNavigate} from "react-router";
 
 
-const Authorization = () => {
+const Authorization = (props) => {
 
     localStorage.clear();
 
@@ -28,7 +28,6 @@ const Authorization = () => {
 
     const [formValid, setFormValid] = useState(false);
 
-    const [authorized, setAuthorized] = useState('false');
     useEffect(() => {
         if (emailError || passwordError || nameError || surnameError || loginError) {
             setFormValid(false)
@@ -146,15 +145,13 @@ const Authorization = () => {
                 setPassword('');
                 setEmail('');
                 setLogin('');
-                setAuthorized('true');
 
                 navigate(`../profile?id=${login}`, { replace: true });
 
                 localStorage.setItem('userLogin', login);
-                localStorage.setItem('userPassword', password);
                 localStorage.setItem('userName', name);
                 localStorage.setItem('userSurname', surname);
-                localStorage.setItem('authorized', authorized);
+                props.logIn()
             })
     };
 

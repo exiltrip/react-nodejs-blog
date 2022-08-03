@@ -2,7 +2,7 @@ import React from 'react';
 import s from './header.module.sass'
 import {NavLink} from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
 
     const urlId = localStorage.getItem('userLogin');
     const authorized = localStorage.getItem('authorized');
@@ -33,7 +33,12 @@ const Header = () => {
                 <NavLink className={s.a} activeClassName={s.activeLink} to={`/messages?id=${urlId}`}>Messages</NavLink>
                 <NavLink className={s.a} activeClassName={s.activeLink} to="/news">News</NavLink>
                 <NavLink className={s.a} activeClassName={s.activeLink} to={`/music?id=${urlId}`}>Music</NavLink>
-                <NavLink id="auth" className={s.a} activeClassName={s.activeLink} to="/authorization">Log In / Sign In</NavLink>
+                {props.isLoggedIn ? (
+                    <button className={s.a} activeClassName={s.activeLink} onClick={props.logOut}>Logout</button>
+                ) : (
+                    <NavLink id="auth" className={s.a} activeClassName={s.activeLink} to="/authorization">Log In / Sign In</NavLink>
+                )}
+
 
             </nav>
         </header>
