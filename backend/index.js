@@ -7,6 +7,10 @@ const cors = require('cors')
 
 app.use(cors())
 app.disable('etag');
+app.get('/*', function(req, res, next){
+    res.setHeader('Last-Modified', (new Date()).toUTCString());
+    next();
+});
 app.get('/api', function (req, res, next) {
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     res.header("Pragma", "no-cache");

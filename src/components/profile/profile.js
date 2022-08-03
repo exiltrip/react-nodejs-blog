@@ -8,8 +8,6 @@ const Profile = () => {
     const url = new URL(document.location.href);
     const urlID = (url.searchParams.get('id'));
 
-    const userName = localStorage.getItem('userName');
-    const userSurname = localStorage.getItem('userSurname');
     const userLogin = localStorage.getItem('userLogin');
 
     const [content, setContent] = useState('');
@@ -33,7 +31,6 @@ const Profile = () => {
                 console.log(res.data);
                 setContent('');
                 setTitle('');
-                setUserId('');
 
                 axios.get(`http://localhost:8080/api/post?id=${urlID}`)
                     .then(res => {

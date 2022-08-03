@@ -148,7 +148,6 @@ const Authorization = () => {
                 setLogin('');
                 setAuthorized('true');
 
-
                 navigate(`../profile?id=${login}`, { replace: true });
 
                 localStorage.setItem('userLogin', login);
