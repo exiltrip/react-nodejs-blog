@@ -10,9 +10,17 @@ create TABLE person(
 
 create TABLE message(
     id SERIAL PRIMARY KEY,
-    content VARCHAR(2000),
-    user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES person (id)
+    dialogId varchar(255),
+    message varchar(2000),
+    senderId varchar(255),
+    recipientId varchar(255)
+);
+
+create TABLE dialogs(
+    id SERIAL PRIMARY KEY,
+    senderLogin varchar(255),
+    lastMessage varchar(255),
+    user_id varchar(255)
 );
 
 create TABLE post(
@@ -23,7 +31,4 @@ create TABLE post(
 );
 
 
-create TABLE images(
-    image VARCHAR(255)
-);
 

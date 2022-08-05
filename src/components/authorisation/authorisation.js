@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import s from './authorisation.module.sass'
+import './authBackground.sass'
 import axios from "axios";
 import {useNavigate} from "react-router";
 
@@ -154,17 +155,31 @@ const Authorization = (props) => {
                 props.logIn()
             })
     };
+    (function() {
+        document.addEventListener("mousemove", auth);
+        const elem = document.querySelector(".auth");
+        function auth(e) {
+            let w = window.innerWidth/2;
+            let h = window.innerHeight/2;
+            let mouseX = e.clientX;
+            let mouseY = e.clientY;
+            let depth = `${50 - (mouseX - w) * 0.06}% ${50 - (mouseY - h) * 0.06}%`;
+            let x = `${depth}`;
+            console.log(x);
+            elem.style.backgroundPosition = x;
+        }
 
+    })();
     return (
-        <main className={s.main_auth}>
+        <main className="auth" >
             <form>
                 <h1>Sign In</h1>
 
                 {(emailDirty && emailError) && <div className={s.error} style={{color: "red"}}>{emailError}</div>}
                 <input onChange={e => emailHandler(e) && handleChangeEmail} value={email} onBlur={e => blurHandler(e)} type="text" name="email" placeholder="Enter your e-mail"/>
 
-                {(passwordDirty && passwordError) && <div className={s.error} style={{color: "red"}}>{passwordError}</div>}
-                <input onChange={e => passwordHandler(e) && handleChangePassword} value={password} onBlur={e => blurHandler(e)} type="password" name="password" placeholder="Enter your password"/>
+                {(loginDirty && loginError) && <div className={s.error} style={{color: "red"}}>{loginError}</div>}
+                <input onChange={e => loginHandler(e) && handleChangeLogin} value={login} onBlur={e => blurHandler(e)} type="text" name="login" placeholder="Enter your login"/>
 
                 {(nameDirty && nameError) && <div className={s.error} style={{color: "red"}}>{nameError}</div>}
                 <input onChange={e => nameHandler(e) && handleChangeName} value={name} onBlur={e => blurHandler(e)} type="text" name="name" placeholder="Enter your name"/>
@@ -172,8 +187,8 @@ const Authorization = (props) => {
                 {(surnameDirty && surnameError) && <div className={s.error} style={{color: "red"}}>{surnameError}</div>}
                 <input onChange={e => surnameHandler(e) && handleChangeSurname} value={surname} onBlur={e => blurHandler(e)} type="text" name="surname" placeholder="Enter your surname"/>
 
-                {(loginDirty && loginError) && <div className={s.error} style={{color: "red"}}>{loginError}</div>}
-                <input onChange={e => loginHandler(e) && handleChangeLogin} value={login} onBlur={e => blurHandler(e)} type="text" name="login" placeholder="Enter your login"/>
+                {(passwordDirty && passwordError) && <div className={s.error} style={{color: "red"}}>{passwordError}</div>}
+                <input onChange={e => passwordHandler(e) && handleChangePassword} value={password} onBlur={e => blurHandler(e)} type="password" name="password" placeholder="Enter your password"/>
 
                 <button disabled={!formValid} type="submit" onClick={handleSubmit}>Sign In</button>
 

@@ -1,6 +1,7 @@
 const express = require("express")
 const userRouter = require('./routes/user.routes')
 const postRouter = require('./routes/post.routes')
+const dialogRouter = require('./routes/dialog.routes')
 const PORT = process.env.PORT || 8080
 const app = express()
 const cors = require('cors')
@@ -21,5 +22,6 @@ app.get('/api', function (req, res, next) {
 app.use(express.json())
 app.use('/api',  userRouter)
 app.use('/api',  postRouter)
+app.use('/api',  dialogRouter)
 
 app.listen(PORT, () => console.log(`server started on port ${PORT}`))

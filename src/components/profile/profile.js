@@ -22,7 +22,6 @@ const Profile = () => {
         setTitle(event.target.value);
     }
 
-
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post(`http://localhost:8080/api/post`, { userId, content, title })

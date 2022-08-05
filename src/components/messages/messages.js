@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './messages.module.sass'
 import DialogWindow from './dialogwindow'
 import logo1 from '../../images/gitlogo.jpg'
@@ -6,18 +6,29 @@ import logo2 from '../../images/logo1.jpg'
 import logo3 from '../../images/logo3.jpg'
 import logo4 from '../../images/logo4.jpg'
 import logo5 from '../../images/logo5.jpg'
+import Post from "../profile/Post";
+import axios from "axios";
 
 const Messages = () => {
+
+
+    const [dialogs, setDialog] = useState([])
+
+    useEffect(() => {
+        const url = new URL(document.location.href);
+        const urlID = (url.searchParams.get('id'));
+        axios.get(`http://localhost:8080/api/dialogs?id=${urlID}`)
+            .then(res => {
+                setDialog(res.data);
+            })
+    }, []);
+
     return (
         <main className={s.main}>
             <h1>messages</h1>
             <div className={s.Dialogs}>
             <div className={s.DialogWindows}>
-            <DialogWindow img={logo1} UserName={'Exiltrip'} dialogID={"/messages/1"} LastMessage={"You: PIZDEEEC"}/>
-            <DialogWindow img={logo2} UserName={'Vladimir Hohloeb'} dialogID={"/messages/2"} LastMessage={"norm, davai"}/>
-            <DialogWindow img={logo3} UserName={'Analniy deboshir2009'} dialogID={"/messages/3"} LastMessage={"You: uroki sdelal?"}/>
-            <DialogWindow img={logo4} UserName={'Arkasha Incest'} dialogID={"/messages/4"} LastMessage={"you: hochu tebya"}/>
-            <DialogWindow img={logo5} UserName={'Shluha Tupaya'} dialogID={"/messages/5"} LastMessage={"Yamete kudasai"}/>
+            {dialogs.map(message => <DialogWindow logo={logo3} userName={message.senderlogin} dialogID={message.id} LastMessage={message.lastmessage} id={message.id }  />)}
             </div>
 
             <div className={s.DialogMain}>

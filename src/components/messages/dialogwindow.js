@@ -3,14 +3,19 @@ import s from './messages.module.sass'
 import {NavLink} from "react-router-dom";
 
 const DialogWindow = (props) => {
+
+    const senderLogin = props.senderLogin;
+    const lastMessage = props.lastMessage;
+    const dialogID = props.dialogID;
+
     return (
         <section className={s.section}>
 
 
-            <img src={props.img} alt=""/>
-            <div className="text"><NavLink to={props.dialogID}>
-            <h4>{props.UserName}</h4>
-            <p>{props.LastMessage}</p>
+            <img src={props.logo} alt=""/>
+            <div className="text"><NavLink to={`./${dialogID}`}>
+            <h4>{senderLogin}</h4>
+            <p>{lastMessage}</p>
             </NavLink>
             </div>
 
