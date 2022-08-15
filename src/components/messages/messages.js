@@ -19,6 +19,7 @@ const Messages = () => {
         const urlID = (url.searchParams.get('id'));
         axios.get(`http://localhost:8080/api/dialogs?id=${urlID}`)
             .then(res => {
+                console.log(res.data);
                 setDialog(res.data);
             })
     }, []);
@@ -28,7 +29,7 @@ const Messages = () => {
             <h1>messages</h1>
             <div className={s.Dialogs}>
             <div className={s.DialogWindows}>
-            {dialogs.map(message => <DialogWindow logo={logo3} userName={message.senderlogin} dialogID={message.id} LastMessage={message.lastmessage} id={message.id }  />)}
+            {dialogs.map(object => <DialogWindow logo={logo3} userName={object.senderlogin} dialogID={object.id} LastMessage={object.lastmessage} id={object.id }  />)}
             </div>
 
             <div className={s.DialogMain}>
