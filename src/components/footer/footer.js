@@ -6,7 +6,7 @@ const Footer = () => {
 
     return (
         <footer className={s.footer}>
-
+        <h1>footer</h1>
         </footer>
     );
 
