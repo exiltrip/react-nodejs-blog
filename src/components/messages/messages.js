@@ -35,7 +35,7 @@ const Messages = () => {
             <div className={s.DialogMain}>
                 <div className={s.DialogMainHeader}>
                     <img className={s.img} src={logo4} alt=""/>
-                    <h4 className={s.h4}>Arkasha Incest</h4>
+                    <h4 className={s.h4}>Sender Name</h4>
                 </div>
 
                 <div className={s.MessageBar}>
